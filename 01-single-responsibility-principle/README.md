@@ -46,7 +46,19 @@ func (t Todo) Item(index int) string {
 	return result
 }
 
-// Not good
+func main() {
+	todo := Todo{}
+	todo.Add("Buy milk.")
+	todo.Add("Buy bananas.")
+	todo.Add("Go to the cinema.")
+}
+```
+
+In the above example, the Todo type is responsible for managing its items such as: add, delete, get item, count item, etc.
+
+However, it may be tempting to add a functionality, for example to persistent its items.
+
+```
 func (t Todo) SaveToFile(filename string) error {
 	s := strings.Builder{}
 	for k, v := range t.items {
@@ -65,15 +77,11 @@ func main() {
 }
 ```
 
-In the above example, the Todo type is responsible for managing its items such as: add, delete, get item, count item, etc.
-
-However, it may be tempting to add a functionality, for example to persistent its items.
-
 ## The Reason Why This Is Not a Good Practice
 
 1. The Todo type is no longer focus on maintaining its items but also to persisting it.
 
-2. The Todo type may be used by several packages. If any package is not satisfied with its persistent functionality, we have to add other functionality or worse, modify the existing one (violating the Open-Close Principle).
+2. The Todo type may be used by several packages. If any package is not satisfied with its persistent functionality, we have to add other functionality or worse, modify the existing one (violating the Open-Closed Principle).
 
 ## A Better Approach
 
