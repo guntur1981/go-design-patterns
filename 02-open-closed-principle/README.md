@@ -48,7 +48,7 @@ func main() {
 
 In the above example, the Filter type has only one method for filtering by department.
 
-In we also want to filter by first name, then we have to add another method, such as:
+If we also want to filter by first name, then we have to add another method, such as:
 
 ```
 ...
@@ -68,29 +68,164 @@ func (f Filter) ByFirstname(data []Employee, fname string) []Employee {
 
 ## The Reason Why This Is Not a Good Practice
 
-1. The Todo type is no longer focus on maintaining its items but also to persisting it.
+If we no longer need the filter by first name, instead we want to filter by department and by first name, we have to modify the Filter type, such as:
 
-2. The Todo type may be used by several packages. If any package is not satisfied with its persistent functionality, we have to add other functionality or worse, modify the existing one (violating the Open-Close Principle).
+```
+...
+
+// DELETED
+// func (f Filter) ByDepartment(data []Employee, dept string) []Employee {
+// 	result := []Employee{}
+// 	for _, v := range data {
+// 		if v.Department == dept {
+// 			result = append(result, v)
+// 		}
+// 	}
+// 	return result
+// }
+
+// func (f Filter) ByFirstname(data []Employee, fname string) []Employee {
+// 	result := []Employee{}
+// 	for _, v := range data {
+// 		if v.Firstname == fname {
+// 			result = append(result, v)
+// 		}
+// 	}
+// 	return result
+// }
+
+func (f Filter) ByDepartmentAndFirstname(data []Employee, dept, fname string) []Employee {
+	result := []Employee{}
+	for _, v := range data {
+		if v.Department == dept && v.Firstname == fname {
+			result = append(result, v)
+		}
+	}
+	return result
+}
+
+...
+```
+
+This would violate the Open-Closed Principle where the Filter type should not be opened for modification.
 
 ## A Better Approach
 
-A better approach is to separate the persistent con into another package or function. For example:
+A better approach is to change the Filter type to an interface that will be implemented differently based on the requirements, such as:
 
 ```
-func SaveTodo(todo *Todo, filename string) error {
-	s := strings.Builder{}
-	for i := 0; i < todo.Count(); i++ {
-		s.WriteString(fmt.Sprintf("%d. %s\n", i+1, todo.Item(i)))
+...
+
+type Filter interface {
+	Equal(emp *Employee) bool
+}
+
+type DepartmentFilter struct {
+	Department string
+}
+
+func (d DepartmentFilter) Equal(emp *Employee) bool {
+	return emp.Department == d.Department
+}
+
+...
+```
+
+Then, provide a function (method) to use the Filter type depending on needs, such as:
+
+```
+...
+
+func FilterEmployees(data []Employee, f Filter) []Employee {
+	result := []Employee{}
+
+	for _, v := range data {
+		if f.Equal(&v) {
+			result = append(result, v)
+		}
 	}
 
-	return os.WriteFile(filename, []byte(s.String()), 644)
+	return result
+}
+
+...
+```
+
+Below is the full example source code:
+
+```
+package main
+
+import "fmt"
+
+type Employee struct {
+	Department string
+	Firstname  string
+	Lastname   string
+}
+
+type Filter interface {
+	Equal(emp *Employee) bool
+}
+
+type DepartmentFilter struct {
+	Department string
+}
+
+func (d DepartmentFilter) Equal(emp *Employee) bool {
+	return emp.Department == d.Department
+}
+
+type FirstnameFilter struct {
+	Firstname string
+}
+
+func (f FirstnameFilter) Equal(emp *Employee) bool {
+	return emp.Firstname == f.Firstname
+}
+
+type AndFilter struct {
+	First, Second Filter
+}
+
+func (a AndFilter) Equal(emp *Employee) bool {
+	return a.First.Equal(emp) && a.Second.Equal(emp)
+}
+
+func FilterEmployees(data []Employee, f Filter) []Employee {
+	result := []Employee{}
+
+	for _, v := range data {
+		if f.Equal(&v) {
+			result = append(result, v)
+		}
+	}
+
+	return result
 }
 
 func main() {
-	todo := Todo{}
-	todo.Add("Buy milk.")
-	todo.Add("Buy bananas.")
-	todo.Add("Go to the cinema.")
-	SaveTodo(&todo, "todo.txt")
+	employees := []Employee{
+		{"Engineering", "Mike", "Whiscard"},
+		{"Marketing", "Suzann", "Breeder"},
+		{"Marketing", "Shani", "Cranmer"},
+		{"Legal", "Nathan", "Hendriks"},
+		{"Sales", "Eric", "Stanwood"},
+	}
+
+	// filter by department
+	deptFilter := DepartmentFilter{"Marketing"}
+	result := FilterEmployees(employees, deptFilter)
+	fmt.Printf("%+v\n", result)
+
+	// filter by firstname
+	fnameFilter := FirstnameFilter{"Suzann"}
+	result = FilterEmployees(employees, fnameFilter)
+	fmt.Printf("%+v\n", result)
+
+	// filter by department and firstname
+	deptFnameFilter := AndFilter{deptFilter, fnameFilter}
+	result = FilterEmployees(employees, deptFnameFilter)
+	fmt.Printf("%+v\n", result)
 }
 ```

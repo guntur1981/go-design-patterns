@@ -1,65 +1,74 @@
 package main
 
-import (
-	"fmt"
-	"os"
-	"strings"
-)
+import "fmt"
 
-type Todo struct {
-	items []string
+type Employee struct {
+	Department string
+	Firstname  string
+	Lastname   string
 }
 
-func (t *Todo) Add(s string) int {
-	t.items = append(t.items, s)
-	return len(t.items)
+type Filter interface {
+	Equal(emp *Employee) bool
 }
 
-func (t Todo) Count() int {
-	return len(t.items)
+type DepartmentFilter struct {
+	Department string
 }
 
-func (t *Todo) Delete(index int) string {
-	deleted := ""
-	if index > -1 && index < len(t.items) {
-		deleted = t.items[index]
-		copy(t.items[index:], t.items[index+1:])
-		t.items = t.items[:len(t.items)-1]
+func (d DepartmentFilter) Equal(emp *Employee) bool {
+	return emp.Department == d.Department
+}
+
+type FirstnameFilter struct {
+	Firstname string
+}
+
+func (f FirstnameFilter) Equal(emp *Employee) bool {
+	return emp.Firstname == f.Firstname
+}
+
+type AndFilter struct {
+	First, Second Filter
+}
+
+func (a AndFilter) Equal(emp *Employee) bool {
+	return a.First.Equal(emp) && a.Second.Equal(emp)
+}
+
+func FilterEmployees(data []Employee, f Filter) []Employee {
+	result := []Employee{}
+
+	for _, v := range data {
+		if f.Equal(&v) {
+			result = append(result, v)
+		}
 	}
-	return deleted
-}
 
-func (t Todo) Item(index int) string {
-	result := ""
-	if index > -1 && index < len(t.items) {
-		result = t.items[index]
-	}
 	return result
 }
 
-// Not good
-func (t Todo) SaveToFile(filename string) error {
-	s := strings.Builder{}
-	for k, v := range t.items {
-		s.WriteString(fmt.Sprintf("%d. %s\n", k+1, v))
-	}
-
-	return os.WriteFile(filename, []byte(s.String()), 644)
-}
-
-func SaveTodo(todo *Todo, filename string) error {
-	s := strings.Builder{}
-	for i := 0; i < todo.Count(); i++ {
-		s.WriteString(fmt.Sprintf("%d. %s\n", i+1, todo.Item(i)))
-	}
-
-	return os.WriteFile(filename, []byte(s.String()), 644)
-}
-
 func main() {
-	todo := Todo{}
-	todo.Add("Buy milk.")
-	todo.Add("Buy bananas.")
-	todo.Add("Go to the cinema.")
-	SaveTodo(&todo, "todo.txt")
+	employees := []Employee{
+		{"Engineering", "Mike", "Whiscard"},
+		{"Marketing", "Suzann", "Breeder"},
+		{"Marketing", "Shani", "Cranmer"},
+		{"Legal", "Nathan", "Hendriks"},
+		{"Sales", "Eric", "Stanwood"},
+	}
+
+	// filter by department
+	deptFilter := DepartmentFilter{"Marketing"}
+	result := FilterEmployees(employees, deptFilter)
+	fmt.Printf("%+v\n", result)
+
+	// filter by firstname
+	fnameFilter := FirstnameFilter{"Suzann"}
+	result = FilterEmployees(employees, fnameFilter)
+	fmt.Printf("%+v\n", result)
+
+	// filter by department and firstname
+	deptFnameFilter := AndFilter{deptFilter, fnameFilter}
+	result = FilterEmployees(employees, deptFnameFilter)
+	fmt.Printf("%+v\n", result)
 }

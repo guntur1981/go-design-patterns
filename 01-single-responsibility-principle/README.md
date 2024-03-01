@@ -9,12 +9,6 @@ Consider the following example:
 ```
 package main
 
-import (
-	"fmt"
-	"os"
-	"strings"
-)
-
 type Todo struct {
 	items []string
 }
