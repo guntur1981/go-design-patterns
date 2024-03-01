@@ -59,6 +59,10 @@ In the above example, the Todo type is responsible for managing its items such a
 However, it may be tempting to add a functionality, for example to persistent its items.
 
 ```
+package main
+
+...
+
 func (t Todo) SaveToFile(filename string) error {
 	s := strings.Builder{}
 	for k, v := range t.items {
@@ -88,6 +92,10 @@ func main() {
 A better approach is to separate the persistent concern into another package or function. For example:
 
 ```
+package main
+
+...
+
 func SaveTodo(todo *Todo, filename string) error {
 	s := strings.Builder{}
 	for i := 0; i < todo.Count(); i++ {

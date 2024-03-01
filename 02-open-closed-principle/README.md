@@ -9,65 +9,62 @@ Consider the following example:
 ```
 package main
 
-import (
-	"fmt"
-	"os"
-	"strings"
-)
+import "fmt"
 
-type Todo struct {
-	items []string
+type Employee struct {
+	Department string
+	Firstname  string
+	Lastname   string
 }
 
-func (t *Todo) Add(s string) int {
-	t.items = append(t.items, s)
-	return len(t.items)
-}
+type Filter struct{}
 
-func (t Todo) Count() int {
-	return len(t.items)
-}
-
-func (t *Todo) Delete(index int) string {
-	deleted := ""
-	if index > -1 && index < len(t.items) {
-		deleted = t.items[index]
-		copy(t.items[index:], t.items[index+1:])
-		t.items = t.items[:len(t.items)-1]
-	}
-	return deleted
-}
-
-func (t Todo) Item(index int) string {
-	result := ""
-	if index > -1 && index < len(t.items) {
-		result = t.items[index]
+func (f Filter) ByDepartment(data []Employee, dept string) []Employee {
+	result := []Employee{}
+	for _, v := range data {
+		if v.Department == dept {
+			result = append(result, v)
+		}
 	}
 	return result
 }
 
-// Not good
-func (t Todo) SaveToFile(filename string) error {
-	s := strings.Builder{}
-	for k, v := range t.items {
-		s.WriteString(fmt.Sprintf("%d. %s\n", k+1, v))
+func main() {
+	employees := []Employee{
+		{"Engineering", "Mike", "Whiscard"},
+		{"Marketing", "Suzann", "Breeder"},
+		{"Marketing", "Shani", "Cranmer"},
+		{"Legal", "Nathan", "Hendriks"},
+		{"Sales", "Eric", "Stanwood"},
 	}
 
-	return os.WriteFile(filename, []byte(s.String()), 644)
-}
+	filter := Filter{}
 
-func main() {
-	todo := Todo{}
-	todo.Add("Buy milk.")
-	todo.Add("Buy bananas.")
-	todo.Add("Go to the cinema.")
-	todo.SaveToFile("todo.txt")
+	result := filter.ByDepartment(employees, "Marketing")
+
+	fmt.Printf("%+v\n", result)
 }
 ```
 
-In the above example, the Todo type is responsible for managing its items such as: add, delete, get item, count item, etc.
+In the above example, the Filter type has only one method for filtering by department.
 
-However, it may be tempting to add a functionality, for example to persistent its items.
+In we also want to filter by first name, then we have to add another method, such as:
+
+```
+...
+
+func (f Filter) ByFirstname(data []Employee, fname string) []Employee {
+	result := []Employee{}
+	for _, v := range data {
+		if v.Firstname == fname {
+			result = append(result, v)
+		}
+	}
+	return result
+}
+
+...
+```
 
 ## The Reason Why This Is Not a Good Practice
 
@@ -77,7 +74,7 @@ However, it may be tempting to add a functionality, for example to persistent it
 
 ## A Better Approach
 
-A better approach is to separate the concern of the persistent into another package or function. For example:
+A better approach is to separate the persistent con into another package or function. For example:
 
 ```
 func SaveTodo(todo *Todo, filename string) error {
