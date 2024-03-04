@@ -99,9 +99,9 @@ To avoid violation of Liskov Substitution Principle, we must determine how we wa
 
 The risk of violations will be greater if you try to mix the two things above.
 
-So according to above example, we only want to use the Shape interface as a generic argument for the PrintArea() function.
+So according to the example above, we just want to use the Shape interface as a generic argument to the PrintArea() function.
 
-Better codes would be, as follows:
+Better code would be, as follows:
 
 ```
 package main
