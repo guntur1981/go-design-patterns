@@ -1,6 +1,6 @@
 # Description
 
-The Liskov Substitution Principle states that the purpose of a type (struct/interface) must be valid in any implementation without breaking the code.
+The Liskov Substitution Principle states that all behaviour of an interface type should be implemented without any problems.
 
 ## Example
 
@@ -14,25 +14,25 @@ import (
 )
 
 type Shape interface {
-	SetHeight(h int)
-	SetWidth(w int)
-	GetArea() int
+	SetHeight(h float64)
+	SetWidth(w float64)
+	GetArea() float64
 }
 
 type Rectangle struct {
-	height int
-	width  int
+	height float64
+	width  float64
 }
 
-func (s *Rectangle) SetHeight(h int) {
+func (s *Rectangle) SetHeight(h float64) {
 	s.height = h
 }
 
-func (s *Rectangle) SetWidth(w int) {
+func (s *Rectangle) SetWidth(w float64) {
 	s.width = w
 }
 
-func (s *Rectangle) GetArea() int {
+func (s *Rectangle) GetArea() float64 {
 	return s.height * s.width
 }
 
@@ -48,27 +48,27 @@ func main() {
 }
 ```
 
-In the above example, the Shape interface implemented by Rectangle struct without any problem.
+In the above example, the Shape interface implemented by Rectangle struct without any problems.
 
-Problems starts to arise when we try to implement the Shape interface with a Circle struct, as follows:
+Problems start to arise when we try to implement the Shape interface with a Circle struct, as follows:
 
 ```
 ...
 
 type Circle struct {
-	radius int
+	radius float64
 }
 
-func (c *Circle) SetHeight(h int) {
+func (c *Circle) SetHeight(h float64) {
 	c.radius = h
 }
 
-func (c *Circle) SetWidth(w int) {
+func (c *Circle) SetWidth(w float64) {
 	c.radius = w
 }
 
-func (c *Circle) GetArea() int {
-	return int(math.Pi * float64(c.radius) * float64(c.radius))
+func (c *Circle) GetArea() float64 {
+	return math.Pi * c.radius * c.radius
 }
 
 func main() {
@@ -85,10 +85,7 @@ func main() {
 
 ## The Reason Why This Is Not a Good Practice
 
-The Circle struct type would violate the Liskov Substitution Principle in several ways:
-
-1. The Circle struct has no height or width properties, only a radius. So, the SetWidth() and SetHeight() methods must be implemented differently to the original purpose of the Shape interface.
-2. The area of the Circle struct always returns a fraction number, whereas the GetArea() signature of the Shape interface type return a type int, so a type conversion must be performed and produces less accurate result.
+The Circle struct has no height or width properties, only a radius. So, the SetWidth() and SetHeight() methods have to be tweaked in such a way so that all behavior of the Shape interface can be implemented.
 
 ## A Better Approach
 
