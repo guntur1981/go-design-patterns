@@ -32,17 +32,17 @@ type Repository interface {
 	UpdatePost(p *Post) error
 }
 
-type CacheRepository struct {
+type Cache struct {
 	bloggers []Blogger
 	posts    []Post
 }
 
-func (c *CacheRepository) CreateBlogger(b *Blogger) error {
+func (c *Cache) CreateBlogger(b *Blogger) error {
 	b.Id = len(c.bloggers) + 1
 	c.bloggers = append(c.bloggers, *b)
 	return nil
 }
-func (c *CacheRepository) ReadBlogger(id int) *Blogger {
+func (c *Cache) ReadBlogger(id int) *Blogger {
 	var result *Blogger
 	for b := range c.bloggers {
 		if c.bloggers[b].Id == id {
@@ -52,15 +52,15 @@ func (c *CacheRepository) ReadBlogger(id int) *Blogger {
 	}
 	return result
 }
-func (c *CacheRepository) CreatePost(p *Post) error {
+func (c *Cache) CreatePost(p *Post) error {
 	// ...
 	return nil
 }
-func (c *CacheRepository) ReadPost(title string) *Post {
+func (c *Cache) ReadPost(title string) *Post {
 	// ...
 	return nil
 }
-func (c *CacheRepository) UpdatePost(p *Post) error {
+func (c *Cache) UpdatePost(p *Post) error {
 	// ...
 	return nil
 }
@@ -75,7 +75,7 @@ func AddBlogger(repo Repository, b *Blogger) {
 }
 
 func main() {
-	cache := CacheRepository{}
+	cache := Cache{}
 
 	f := Blogger{}
 	f.Name = "Foo"
