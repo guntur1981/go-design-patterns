@@ -1,6 +1,6 @@
 # Description
 
-The Liskov Substitution Principle states that all behaviour of an interface type should be implemented without any problems.
+The Liskov Substitution Principle in Go states that all behaviour of an interface type should be implemented without any problems.
 
 ## Example
 

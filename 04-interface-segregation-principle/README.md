@@ -1,6 +1,6 @@
 # Description
 
-The Interface Segregation Principle states that an interface type should not impose any behavior that is not required.
+The Interface Segregation Principle in Go states that an interface type should not impose any behavior that is not required.
 
 ## Example
 

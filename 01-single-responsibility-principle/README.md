@@ -1,6 +1,6 @@
 # Description
 
-Single Responsibility Principle states that a type should be made for one specific purpose.
+Single Responsibility Principle in Go states that a type should be made for one specific purpose.
 
 ## Example
 

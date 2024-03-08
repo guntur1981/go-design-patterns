@@ -1,6 +1,6 @@
 # Description
 
-The Open-Closed Principle states that a type should be open for extension, but closed for modification.
+The Open-Closed Principle in states that a type should be open for extension, but closed for modification.
 
 ## Example
 
