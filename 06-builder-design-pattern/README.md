@@ -1,6 +1,6 @@
 # Description
 
-The Builder Design Pattern allows you to create complex objects step by step. In other words, a builder is a separate component that is used to build a complex object.
+The Builder Design Pattern allows you to create complex objects **step by step**. In other words, a builder is a separate component that is used to build a complex object.
 
 ## Example
 
