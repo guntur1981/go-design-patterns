@@ -68,11 +68,15 @@ func (eb *EmailBuilder) Build() (Email, error) {
 	if eb.err != nil {
 		return nil, eb.err
 	}
-	valid := eb.err != nil && len(eb.email.from) > 0 && len(eb.email.to) > 0 && len(eb.email.subject) > 0 && len(eb.email.message) > 0
+
+	valid := eb.err != nil && len(eb.email.from) > 0 && len(eb.email.to) > 0 &&
+		len(eb.email.subject) > 0 && len(eb.email.message) > 0
+
 	if !valid {
 		eb.err = errors.New("an email must have from, to, subject and message")
 		return nil, eb.err
 	}
+
 	return eb.email, nil
 }
 
