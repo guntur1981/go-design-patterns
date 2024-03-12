@@ -6,22 +6,33 @@ import (
 	"strings"
 )
 
-type Email struct {
+// only give access to email behaviour
+type Email interface {
+	Send() error
+}
+
+// hide all properties from user
+type email struct {
 	from, to, subject, message string
 }
 
-func (e Email) Send() error {
+func (e email) Send() error {
 	// todo: send the email
 	return nil
 }
 
 type EmailBuilder struct {
 	err   error
-	email *Email
+	email *email
 }
 
-func (eb *EmailBuilder) Build() (*Email, error) {
+func (eb *EmailBuilder) Build() (Email, error) {
 	if eb.err != nil {
+		return nil, eb.err
+	}
+	valid := eb.err != nil && len(eb.email.from) > 0 && len(eb.email.to) > 0 && len(eb.email.subject) > 0 && len(eb.email.message) > 0
+	if !valid {
+		eb.err = errors.New("an email must have from, to, subject and message")
 		return nil, eb.err
 	}
 	return eb.email, nil
@@ -52,7 +63,7 @@ func (eb *EmailBuilder) Message(message string) *EmailBuilder {
 
 func (eb *EmailBuilder) Reset() *EmailBuilder {
 	eb.err = nil
-	eb.email = &Email{}
+	eb.email = &email{}
 	return eb
 }
 
@@ -82,7 +93,7 @@ func sendMail(from, to, subject, message string) error {
 	// ... continue the validation steps
 
 	// initialization steps
-	e := Email{}
+	e := email{}
 	e.from = from
 	e.to = to
 	e.subject = subject

@@ -61,11 +61,16 @@ Let's create a builder to help initialize the Email struct and validate it as we
 ```
 type EmailBuilder struct {
 	err   error
-	email *Email
+	email *email
 }
 
-func (eb *EmailBuilder) Build() (*Email, error) {
+func (eb *EmailBuilder) Build() (Email, error) {
 	if eb.err != nil {
+		return nil, eb.err
+	}
+	valid := eb.err != nil && len(eb.email.from) > 0 && len(eb.email.to) > 0 && len(eb.email.subject) > 0 && len(eb.email.message) > 0
+	if !valid {
+		eb.err = errors.New("an email must have from, to, subject and message")
 		return nil, eb.err
 	}
 	return eb.email, nil
@@ -96,7 +101,7 @@ func (eb *EmailBuilder) Message(message string) *EmailBuilder {
 
 func (eb *EmailBuilder) Reset() *EmailBuilder {
 	eb.err = nil
-	eb.email = &Email{}
+	eb.email = &email{}
 	return eb
 }
 
@@ -119,20 +124,28 @@ func (eb *EmailBuilder) To(to string) *EmailBuilder {
 }
 ```
 
-Except for the Build method, other methods in the above builder always return the receiver to allow method chaining.
+Except for the Build method, other methods in the above builder always return the receiver to allow **method chaining**.
 
-To separate the concern, the sendingMail function becomes the Email Struct behavior:
+To separate the concern, the sendingMail function becomes the email struct behavior:
 
 ```
-type Email struct {
+// only give access to email behaviour
+type Email interface {
+	Send() error
+}
+
+// hide all properties from user
+type email struct {
 	from, to, subject, message string
 }
 
-func (e Email) Send() error {
+func (e email) Send() error {
 	// todo: send the email
 	return nil
 }
 ```
+
+Notice the difference between `Email` and `email`. To prevent users from creating an email struct without the builder and using the send method, we only expose the interface.
 
 Finally, we use the Builder to create the Email struct and validate it as well:
 
