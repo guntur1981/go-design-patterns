@@ -52,7 +52,7 @@ In the above example, the sendMail function has many steps from validation to cr
 ## The Reason Why This Is Not a Good Practice
 
 1. The example has only four properties that must be set and validated. When dealing with structs with more properties or a growing number of properties, the initialization and validations steps also increase, thus increasing complexity.
-1. We want to adhere to Single Responsibility Principle, where the steps for creating and sending email should be separated.
+2. We want to adhere to Single Responsibility Principle, where the steps for creating and sending email should be separated.
 
 ## A Better Approach
 
