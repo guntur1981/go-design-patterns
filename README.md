@@ -12,3 +12,4 @@ A collection of design patterns concept and their implementation in Go from vari
 6. [Builder Design Pattern](/06-builder-design-pattern)
 7. [Factory Design Pattern](/07-factory-design-pattern)
 8. [Prototype Design Pattern](/08-prototype-design-pattern)
+9. [Singleton Design Pattern](/09-singleton-design-pattern)
