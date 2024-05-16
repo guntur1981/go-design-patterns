@@ -32,3 +32,5 @@ A collection of design patterns concept and their implementation in Go from vari
     > Facilitates the addition of behaviors to individual objects through embedding.
 14. [Facade Design Pattern](/14-facade-design-pattern)
     > Provides a simplified interface to a complex and large body of code.
+15. [Flyweight Design Pattern](/14-flyweight-design-pattern)
+    > A space optimization technique, use less memory by avoiding redundancy when storing data.
