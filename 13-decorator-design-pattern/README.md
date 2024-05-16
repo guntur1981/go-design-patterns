@@ -85,7 +85,7 @@ func main() {
 
 ## The Reason Why This Is Not a Good Practice
 
-1. We only embed the behaviours of `Milk` and `Tea` without their data `cost`. So, the `MilkTea` initialization is kind of useless.
+1. We only embed the behaviours of `Milk` and `Tea` without their data `cost`. So, initializing `Milk` and `Tea` is useless.
 2. It's hard to maintain consistency since it defines its own cost.
 
 ## A Better Approach

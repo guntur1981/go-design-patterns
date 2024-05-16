@@ -1,6 +1,6 @@
 # Description
 
-The Decorator Design Pattern is a structural design that provides a simplified interface to a complex and large body of code. It hides the complexities of the system and provides a single interface to the client.
+The Facade Design Pattern is a structural design that provides a simplified interface to a complex and large body of code. It hides the complexities of the system and provides a single interface to the client.
 
 ## Example
 
