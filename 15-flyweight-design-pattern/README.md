@@ -120,7 +120,7 @@ func (f *Flyweight) GetElement(tag string) (HTMLElement, error) {
 }
 ```
 
-**Second**, create this factory in client (function `main()`), as well as register its elements:
+**Second**, create this flyweight's factory in client (function `main()`), as well as register its elements:
 
 ```
 	flyweight := NewFlyweight()
@@ -157,4 +157,4 @@ By using this approach, we also adhere to the Open-Closed Principle, where if th
 	fmt.Println(renderedDocument.String())
 ```
 
-we can return `document` to its original form where if this `document` is sent from other functions, these functions do not need to concern about and create the relevant elements (Separation of Concern).
+We can return `document` to its original form where if this `document` is sent from other functions, these functions do not need to concern about and create the relevant elements (Separation of Concern).
