@@ -87,7 +87,7 @@ func main() {
 }
 ```
 
-The above codes solved the problem of higher memory consumption.
+The above code solves the problem of higher memory consumption by avoiding creating similar objects multiple times.
 
 ## The Reason Why This Is Not a Good Practice
 
