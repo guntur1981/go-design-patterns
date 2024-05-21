@@ -107,6 +107,11 @@ func NewFlyweight() *Flyweight {
 	return &Flyweight{make(map[string]HTMLElement)}
 }
 
+```
+
+**Second**, create two methods to allow dynamic registration and get the element needed. This is also to adhere to the Open-Closed Principle where if there are other elements that need to be rendered, we do not need to modify the Flyweight factory:
+
+```
 func (f *Flyweight) Register(tag string, element HTMLElement) {
 	f.elements[tag] = element
 }
@@ -120,15 +125,13 @@ func (f *Flyweight) GetElement(tag string) (HTMLElement, error) {
 }
 ```
 
-**Second**, create this flyweight's factory in client (function `main()`), as well as register its elements:
+**Third**, create this flyweight's factory in client (function `main()`), as well as register its elements:
 
 ```
 	flyweight := NewFlyweight()
 	flyweight.Register("bold", &BoldElement{})
 	flyweight.Register("italic", &ItalicElement{})
 ```
-
-By using this approach, we also adhere to the Open-Closed Principle, where if there are other elements that need to be rendered, we do not need to modify the Flyweight factory.
 
 **Finally**,
 
