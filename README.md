@@ -34,3 +34,5 @@ A collection of design patterns concept and their implementation in Go from vari
     > Provides a simplified interface to a complex and large body of code.
 15. [Flyweight Design Pattern](/15-flyweight-design-pattern)
     > A space optimization technique, use less memory by avoiding redundancy when storing data.
+16. [Proxy Design Pattern](/16-proxy-design-pattern)
+    > Controls access to the original object, perform additional actions before or after accessing the object.
