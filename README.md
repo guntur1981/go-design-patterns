@@ -36,3 +36,5 @@ A collection of design patterns concept and their implementation in Go from vari
     > A space optimization technique, use less memory by avoiding redundancy when storing data.
 16. [Proxy Design Pattern](/16-proxy-design-pattern)
     > Controls access to the original object, perform additional actions before or after accessing the object.
+17. [Chain of Responsibility Design Pattern](/17-chain-of-responsibility-design-pattern)
+    > Allows an object to pass a request along a chain of potential handlers until the request is handled.
