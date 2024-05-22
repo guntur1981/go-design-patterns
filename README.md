@@ -39,4 +39,6 @@ A collection of design patterns concept and their implementation in Go from vari
 17. [Chain of Responsibility Design Pattern](/17-chain-of-responsibility-design-pattern)
     > Allows an object to pass a request along a chain of potential handlers until the request is handled.
 18. [Command Design Pattern](/18-command-design-pattern)
-    > A stand-alone object represents an intruction to perform a particular action.
+    > A stand-alone object represents a command to perform a particular action.
+19. [Interpreter Design Pattern](/19-interpreter-design-pattern)
+    > Provides a way to interpret and evaluate sentences or expressions in a language.
