@@ -42,3 +42,5 @@ A collection of design patterns concept and their implementation in Go from vari
     > A stand-alone object represents a command to perform a particular action.
 19. [Interpreter Design Pattern](/19-interpreter-design-pattern)
     > Provides a way to interpret and evaluate sentences or expressions in a language.
+20. [Iterator Design Pattern](/20-iterator-design-pattern)
+    > Facilitates the traversal of various data structures in a controlled manner.
