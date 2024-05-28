@@ -46,3 +46,5 @@ A collection of design patterns concept and their implementation in Go from vari
     > Facilitates the traversal of various data structures in a controlled manner.
 21. [Mediator Design Pattern](/21-mediator-design-pattern)
     > Facilitates communication between other components without them having direct access to each other.
+22. [Memento Design Pattern](/22-memento-design-pattern)
+    > Facilitates communication between other components without them having direct access to each other.
