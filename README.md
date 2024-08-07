@@ -48,3 +48,5 @@ A collection of design patterns concept and their implementation in Go from vari
     > Facilitates communication between other components without them having direct access to each other.
 22. [Memento Design Pattern](/22-memento-design-pattern)
     > Roll back the system states arbitrarily.
+23. [Observer Design Pattern](/23-observer-design-pattern)
+    > Propagate a change in an object to other objects without tightly coupling them.
