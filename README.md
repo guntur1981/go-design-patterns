@@ -51,4 +51,4 @@ A collection of design patterns concept and their implementation in Go from vari
 23. [Observer Design Pattern](/23-observer-design-pattern)
     > Propagate a change in an object to other objects without tightly coupling them.
 24. [State Design Pattern](/24-state-design-pattern)
-    > Determine object's behaviour by its state.
+    > Alter object's behaviour when its internal state change.
