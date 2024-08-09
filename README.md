@@ -52,3 +52,5 @@ A collection of design patterns concept and their implementation in Go from vari
     > Propagate a change in an object to other objects without tightly coupling them.
 24. [State Design Pattern](/24-state-design-pattern)
     > Alter object's behaviour when its internal state change.
+25. [Strategy Design Pattern](/25-strategy-design-pattern)
+    > Separates a mechanism into its abstract and concrete implementation steps, which can be varied at run time.
