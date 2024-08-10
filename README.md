@@ -47,10 +47,12 @@ A collection of design patterns concept and their implementation in Go from vari
 21. [Mediator Design Pattern](/21-mediator-design-pattern)
     > Facilitates communication between other components without them having direct access to each other.
 22. [Memento Design Pattern](/22-memento-design-pattern)
-    > Roll back the system states arbitrarily.
+    > Rollbacks the system states arbitrarily.
 23. [Observer Design Pattern](/23-observer-design-pattern)
-    > Propagate a change in an object to other objects without tightly coupling them.
+    > Propagates a change in an object to other objects without tightly coupling them.
 24. [State Design Pattern](/24-state-design-pattern)
-    > Alter object's behaviour when its internal state change.
+    > Changes object's behaviour when its internal state change.
 25. [Strategy Design Pattern](/25-strategy-design-pattern)
     > Separates a mechanism into its abstract and concrete implementation steps, which can be varied at run time.
+26. [Visitor Design Pattern](/26-visitor-design-pattern)
+    > Allows to add further operations to objects without having to modify them.
